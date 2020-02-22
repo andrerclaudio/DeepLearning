@@ -1,4 +1,7 @@
 import logging
+import sys
+import tensorflow as tf
+import keras
 
 
 # Print in software terminal
@@ -16,4 +19,6 @@ def application():
     """
     # All application has its initialization from here
     logger.info('Main application is running!')
-    
+    logger.info('Python: %s', sys.version)
+    logger.info('TensorFlow: %s', tf.__version__)
+    logger.info('Keras: %s', keras.__version__)
