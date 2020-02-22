@@ -1,19 +1,19 @@
 import logging
 
-# Log parameters adjustment call
-# _ Hour (24 hours format)
-# _ Minutes
-# _ Seconds
-# _ Month-Day
-# _ Level to print and above
-# _ Message to show
 
 # Print in software terminal
 logging.basicConfig(level=logging.INFO,
-                    format='[ %(asctime)s ] - %(levelname)s:  %(message)s',
-                    datefmt='%H:%M:%S %m-%d-%y')
+                    format='%(asctime)s | %(name)s | %(levelname)s:  %(message)s',
+                    datefmt='%d/%b/%Y - %H:%M:%S')
+
+logger = logging.getLogger(__name__)
 
 
 def application():
-    """" All application has its initialization from here """
-    logging.info('Main application is running!')
+    """
+    System initialization.
+    :return: None
+    """
+    # All application has its initialization from here
+    logger.info('Main application is running!')
+    
