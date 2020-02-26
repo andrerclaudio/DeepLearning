@@ -22,3 +22,5 @@ def application():
     logger.info('Python: %s', sys.version)
     logger.info('TensorFlow: %s', tf.__version__)
     logger.info('Keras: %s', keras.__version__)
+
+    
