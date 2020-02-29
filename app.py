@@ -1,5 +1,6 @@
 import logging
 
+import keras
 import pandas as pd
 from keras.layers import Dense
 from keras.models import Sequential
@@ -31,12 +32,21 @@ def application():
 
     # Input layer
     classifier.add(Dense(units=16, activation='relu', kernel_initializer='random_uniform', input_dim=30))
+    classifier.add(Dense(units=16, activation='relu', kernel_initializer='random_uniform'))
+    classifier.add(Dense(units=16, activation='relu', kernel_initializer='random_uniform'))
+
     # Output layer
     classifier.add(Dense(units=1, activation='sigmoid'))
 
-    classifier.compile(optimizer='adam', loss='binary_crossentropy', metrics=['binary_accuracy'])
+    optimizer = keras.optimizers.Adam(lr=0.001, decay=0.0001, clipvalue=0.5)
+    classifier.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=['binary_accuracy'])
 
     classifier.fit(predictors_train, validation_train, batch_size=10, epochs=100)
+
+    weight_0 = classifier.layers[0].get_weights()
+    weight_1 = classifier.layers[1].get_weights()
+    weight_2 = classifier.layers[2].get_weights()
+    weight_3 = classifier.layers[3].get_weights()
 
     predictions = classifier.predict(predictors_test)
     predictions = predictions > 0.5
