@@ -12,6 +12,8 @@ from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 from sklearn.preprocessing import LabelEncoder
 
+from .cars import autos
+
 # Print in software terminal
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s | %(name)s | %(levelname)s:  %(message)s',
@@ -25,7 +27,7 @@ def application():
     """
     # All application has its initialization from here
     logger.info('Main application is running!')
-    iris()
+    autos()
 
 
 def iris():
