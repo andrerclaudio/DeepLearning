@@ -6,9 +6,11 @@ import pandas as pd
 from keras.layers import Dense, Dropout
 from keras.models import Sequential
 from keras.models import model_from_json
+from keras.utils import np_utils
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import LabelEncoder
 
 # Print in software terminal
 logging.basicConfig(level=logging.DEBUG,
@@ -23,7 +25,40 @@ def application():
     """
     # All application has its initialization from here
     logger.info('Main application is running!')
-    load_neural_network()
+    iris()
+
+
+def iris():
+    base = pd.read_csv('iris.csv')
+    predictors = base.iloc[:, 0:4].values
+    evaluation = base.iloc[:, 4].values
+
+    label_encoder = LabelEncoder()
+    evaluation = label_encoder.fit_transform(evaluation)
+
+    # iris setosa     1 0 0
+    # iris virginica  0 1 0
+    # iris versicolor 0 0 1
+
+    evaluation_dummy = np_utils.to_categorical(evaluation)
+
+    classifier = KerasClassifier(build_fn=create_web_iris, epochs=1000, batch_size=10)
+    result = cross_val_score(estimator=classifier, X=predictors, y=evaluation, cv=10, scoring='accuracy')
+    mean = result.mean()
+    deviation = result.std()
+    return None
+
+
+def create_web_iris():
+    classifier = Sequential()
+    classifier.add(Dense(units=4, activation='relu', input_dim=4))
+    classifier.add(Dropout(0.2))
+    classifier.add(Dense(units=4, activation='relu'))
+    classifier.add(Dropout(0.2))
+    classifier.add(Dense(units=3, activation='softmax'))
+    classifier.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
+
+    return classifier
 
 
 def cross_breast_cancer():
