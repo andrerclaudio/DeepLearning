@@ -12,7 +12,7 @@ from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 from sklearn.preprocessing import LabelEncoder
 
-from .cars import autos
+from cars import autos
 
 # Print in software terminal
 logging.basicConfig(level=logging.DEBUG,
